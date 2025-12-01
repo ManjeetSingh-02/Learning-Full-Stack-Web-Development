@@ -1,6 +1,3 @@
-const obj1 = { names: [], age: 20 };
-const obj2 = { names: ["sdf"], age: 22 };
-
 class Example {
   constructor(name) {
     this.name = name;
