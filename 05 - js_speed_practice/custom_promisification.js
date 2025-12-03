@@ -1,6 +1,10 @@
 import fs from "fs";
 
-// promisification - wrapping inside a promise
+// -------------------------------
+// PROMISIFICATION: wrapping callback-based functions into promises so that legacy code can be used with promises
+// -------------------------------
+
+// promisification of readFile function
 function readFilePromise(filePath, encoding) {
   return new Promise((res, rej) => {
     fs.readFile(filePath, encoding, (err, data) => {
@@ -10,6 +14,7 @@ function readFilePromise(filePath, encoding) {
   });
 }
 
+// promisification of writeFile function
 function writeFilePromise(filePath, data) {
   return new Promise((res, rej) => {
     fs.writeFile(filePath, data, (err) => {
@@ -19,6 +24,7 @@ function writeFilePromise(filePath, data) {
   });
 }
 
+// promisification of unlink function
 function deleteFilePromise(filePath) {
   return new Promise((res, rej) => {
     fs.unlink(filePath, (err) => {
@@ -28,7 +34,15 @@ function deleteFilePromise(filePath) {
   });
 }
 
+// -------------------------------
+// EXAMPLE (using the promisified functions):
+// - Read contents of "hello.txt"
+// - Create "backup.txt"
+// - Write contents of "hello.txt" into "backup.txt"
+// - Delete "hello.txt"
+// -------------------------------
 readFilePromise("hello.txt", "utf-8")
   .then((data) => writeFilePromise("backup.txt", data))
   .then(() => deleteFilePromise("hello.txt"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
+  .finally(() => console.log("File operations completed"));
