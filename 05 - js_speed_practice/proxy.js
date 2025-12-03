@@ -12,6 +12,7 @@ let proxiedUser = new Proxy(user, {
   set(target, prop, value) {
     if (prop === "password") console.log("You cannot change the password");
     else target[prop] = value;
+    return true; // Indicate success
   },
 });
 
