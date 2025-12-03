@@ -36,14 +36,9 @@ console.log(arr.myFilter((e) => e > 2));
 
 if (!Array.prototype.myReduce) {
   Array.prototype.myReduce = function (cb, initialValue = null) {
-    // let acc, startIndex;
-    // if (initialValue) {
-    //   acc = initialValue;
-    //   startIndex = 0;
-    // } else {
-    //   acc = this[0];
-    //   startIndex = 1;
-    // }
+    if (this.length === 0 && initialValue === null) throw new TypeError('Array is empty with no initial value');
+
+    if(this.length === 0) return initialValue;
 
     let acc = initialValue || this[0];
     let startIndex = initialValue ? 0 : 1;
@@ -57,8 +52,8 @@ console.log(arr.myReduce((acc, value) => acc + value));
 console.log(arr.myReduce((acc, value) => acc + value, 2));
 
 if (!Array.prototype.myIndexOf) {
-  Array.prototype.myIndexOf = function (value) {
-    for (let i = 0; i < this.length; i++) {
+  Array.prototype.myIndexOf = function (value, startIndex = 0) {
+    for (let i = startIndex; i < this.length; i++) {
       if (this[i] === value) return i;
     }
     return -1;
@@ -67,8 +62,8 @@ if (!Array.prototype.myIndexOf) {
 console.log(arr.myIndexOf(3));
 
 if (!Array.prototype.myIncludes) {
-  Array.prototype.myIncludes = function (value) {
-    for (let i = 0; i < this.length; i++) {
+  Array.prototype.myIncludes = function (value, startIndex = 0) {
+    for (let i = startIndex; i < this.length; i++) {
       if (this[i] === value) return true;
     }
     return false;
